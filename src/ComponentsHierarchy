@@ -1,0 +1,10 @@
+Component hierarchy is 
+
+
+App
+ |__Router
+    |___Home
+        |__PropertyCard
+    |___Register
+    |___Login
+    |___Profile
