@@ -4,19 +4,26 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import {Link} from "react-router-dom";
 
 
 class PropertyCard extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+
+    }
+
     render() {
+        let id = this.props.id;
         return (
             <Card style={styles.card}>
                 <CardContent>
                     <Typography color="textSecondary" gutterBottom>
-                        {this.props.streetNo}
-                        {this.props.roadName},
-                        {this.props.city},
-                        {this.props.state}
-                        {this.props.zipCode}
+                        {this.props.streetNo} {this.props.roadName}, {this.props.city}, {this.props.state} {this.props.zipCode}
                     </Typography>
                     <Typography style={styles.pos} color="textSecondary">
                         Price: {this.props.price}
@@ -26,11 +33,14 @@ class PropertyCard extends React.Component {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" onClick={() => this.handleClick()}>View Details</Button>
+                    <Link to={"/property-details/"+id}>
+                    <Button size="small">View Details</Button>
+                    </Link>
                 </CardActions>
             </Card>
         );
     }
+
 }
 
 const styles = {

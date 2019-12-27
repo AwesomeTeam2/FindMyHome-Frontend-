@@ -9,6 +9,7 @@ import Home from "./Home";
 import Profile from "./Profile";
 import Login from "./Login"
 import Register from "./Register"
+import PropertyDetails from "./PropertyDetails"
 
 
 class RouterPage extends React.Component {
@@ -59,6 +60,7 @@ class RouterPage extends React.Component {
                         <Route path="/profile">
                             <Profile />
                         </Route>
+                        <Route path="/property-details/:id" component={PropertyDetails} />
                     </Switch>
                 </div>
             </Router>
