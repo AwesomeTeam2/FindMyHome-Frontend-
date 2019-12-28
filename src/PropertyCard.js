@@ -4,6 +4,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import CardMedia from '@material-ui/core/CardMedia';
 import {Link} from "react-router-dom";
 
 
@@ -31,6 +32,11 @@ class PropertyCard extends React.Component {
                     <Typography style={styles.pos} color="textSecondary">
                         {this.props.description}
                     </Typography>
+                    <CardMedia
+                        style={styles.media}
+                        image="/image/0"
+                        title="Property Image"
+                    />
                 </CardContent>
                 <CardActions>
                     <Link to={"/property-details/"+id}>
@@ -53,7 +59,11 @@ const styles = {
     },
     pos: {
         marginBottom: 12,
-    }
+    },
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    },
 }
 
 export default PropertyCard;
