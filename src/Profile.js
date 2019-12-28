@@ -9,8 +9,44 @@ class Profile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "You are not logged in"
+            username: "You are not logged in",
+            commuteRoutes:[]
         }
+    }
+
+    componentDidMount() {
+        // remote request to get user's saved routes
+        let url = "/api/route";
+        let token = localStorage.getItem("token");
+        const options = {
+            headers: {'Authorization': token}
+        };
+
+        axios.get(url, options)
+            .then((response) => {
+                console.log(response);
+
+                // display the returned routes
+                let routes = [];
+                let numOfResults = response.data.length;
+                for (let i = 0; i < numOfResults; ++i) {
+                    let data = response.data[i];
+                    // routes.push(<PropertyCard
+                    //     id={data.id}
+                    //     price={data.price}
+                    //     description={data.description}
+                    //     streetNo={data.address.streetNo}
+                    //     roadName={data.address.roadName}
+                    //     city={data.address.city}
+                    //     state={data.address.state}
+                    //     zipCode={data.address.zipCode}
+                    // />);
+                }
+                this.setState({commuteRoutes:routes});
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
 

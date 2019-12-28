@@ -5,18 +5,24 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
+import Fab from '@material-ui/core/Fab';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import {Link} from "react-router-dom";
+import axios from 'axios';
 
 
 class PropertyCard extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            favIcon: <FavoriteBorderIcon/>,
+            liked: false
+        }
+
     }
 
-    componentDidMount() {
-
-    }
 
     render() {
         let id = this.props.id;
@@ -32,6 +38,9 @@ class PropertyCard extends React.Component {
                     <Typography style={styles.pos} color="textSecondary">
                         {this.props.description}
                     </Typography>
+                    <Fab aria-label="like" style={styles.icon} onClick={() => this.favIconAction()}>
+                        {this.state.favIcon}
+                    </Fab>
                     <CardMedia
                         style={styles.media}
                         image="/image/0"
@@ -45,6 +54,47 @@ class PropertyCard extends React.Component {
                 </CardActions>
             </Card>
         );
+    }
+
+
+    favIconAction = () => {
+
+        let url = "/api/";
+        let path;
+        let token = localStorage.getItem("token");
+        let payload = {
+            "id" : this.props.id
+        }
+
+        const options = {
+            headers: {'Authorization': token}
+        };
+
+        if (this.state.liked) {
+            path = "unlike";
+            this.setState({
+                favIcon: <FavoriteBorderIcon/>,
+                liked: false
+            });
+            console.log("unliked");
+        } else {
+            path = "like";
+            this.setState({
+                favIcon: <FavoriteIcon/>,
+                liked: true
+            });
+            console.log("liked");
+        }
+
+        // update the backend
+        axios.post(url + path, payload, options)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
     }
 
 }
@@ -64,6 +114,9 @@ const styles = {
         height: 0,
         paddingTop: '56.25%', // 16:9
     },
+    icon: {
+        margin: 15
+    }
 }
 
 export default PropertyCard;
